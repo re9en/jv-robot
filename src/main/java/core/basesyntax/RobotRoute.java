@@ -1,44 +1,54 @@
 package core.basesyntax;
 
 public class RobotRoute {
+
     public void moveRobot(Robot robot, int toX, int toY) {
-        Direction currentDirection = robot.getDirection();
 
         if (robot.getX() > toX) {
-            while (currentDirection.equals(Direction.LEFT)) {
-                robot.turnLeft();
-            }
+
+            turnRobot(robot, Direction.LEFT);
+
             while (robot.getX() != toX) {
                 robot.stepForward();
             }
-            System.out.println("X is finished");
         } else if (robot.getX() < toX) {
-            while (currentDirection.equals(Direction.RIGHT)) {
-                robot.turnLeft();
-            }
+            turnRobot(robot, Direction.RIGHT);
             while (robot.getX() != toX) {
                 robot.stepForward();
             }
 
         }
         if (robot.getY() > toY) {
-            while (currentDirection.equals(Direction.DOWN)) {
-                robot.turnLeft();
-            }
+            turnRobot(robot, Direction.DOWN);
             while (robot.getY() != toY) {
                 robot.stepForward();
             }
-            System.out.println("Y is finished");
         } else if (robot.getY() < toY) {
-            while (currentDirection.equals(Direction.UP)) {
-                robot.turnLeft();
-            }
-            while (robot.getX() != toY) {
+            turnRobot(robot, Direction.UP);
+            while (robot.getY() != toY) {
                 robot.stepForward();
             }
+        }
+    }
 
-            if ((robot.getX() == toX) && (robot.getY() == toY)) {
-            System.out.println("Y and X is finished");
+    public void turnRobot(Robot robot,Direction targetDirection) {
+
+        int trgDir = targetDirection.ordinal();
+
+        while (!robot.getDirection().equals(targetDirection)) {
+            int actDir = robot.getDirection().ordinal();
+            int diff = ((trgDir - actDir) + 4) % 4;
+
+            switch (diff) {
+                case 1: robot.turnRight();
+                break;
+                case 2: robot.turnLeft();
+                    robot.turnLeft();
+                break;
+                case 3: robot.turnLeft();
+                break;
+                default:
+                    break;
             }
         }
     }
